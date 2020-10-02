@@ -1,0 +1,15 @@
+{
+  "name": "sbreact",
+  "version": "1.0.0",
+  "description": "Skillbox react course",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "keywords": [
+    "React",
+    "Skillbox"
+  ],
+  "author": "Dmitry Kashin <wild.mephist@gmail.com>",
+  "license": "ISC"
+}
