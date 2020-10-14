@@ -3,7 +3,7 @@ const [webpackClientConfig, webpackServerConfig] = require('../webpack.config');
 const nodemon = require('nodemon');
 const path = require('path');
 
-const compiler = webpack(webpackServerConfig);
+const serverCompiler = webpack(webpackServerConfig);
 const clientCompiler = webpack(webpackClientConfig);
 
 const webpackDevMiddleware = require('webpack-dev-middleware');
@@ -32,13 +32,11 @@ hmrServer.listen(3001, () => {
 });
 
 
-
-
-compiler.run((err) => {
+serverCompiler.run((err) => {
   if (err) {
     console.log('Compile fail', err);
   }
-  compiler.watch({}, (err) => {
+  serverCompiler.watch({}, (err) => {
     if (err) {
       console.log('Compile fail', err);
     }

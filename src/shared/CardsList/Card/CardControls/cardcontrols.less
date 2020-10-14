@@ -1,0 +1,52 @@
+@import "/src/variables.global.less";
+
+@media all and (min-width:1024px) {
+  body {
+    .karmaCounter {
+      display: flex;
+      flex-direction: column;
+    }
+    .commentCount {
+      display: none;
+    }
+    .cardActions {
+      display: none;
+    }
+  }
+}
+
+.textContent, .controls {
+  padding-top: 22px;
+  padding-left: 20px;
+  padding-bottom: 20px;
+}
+.card button {
+  cursor: pointer;
+}
+
+.karmaValue {
+  margin: 0 4px;
+  color: @greyC4;
+}
+.up:hover {
+  path {
+    fill: @green;
+  }
+}
+.down:hover {
+  path {
+    fill: @red;
+  }
+}
+.commentValue {
+  vertical-align: super;
+  margin-left: 4px;
+  color: @greyC4;
+}
+.cardActions {
+  display: flex;
+  flex-flow: row wrap;
+}
+.cardActions .plus {
+  margin-left: 15px;
+}

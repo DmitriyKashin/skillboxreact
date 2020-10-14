@@ -1,0 +1,75 @@
+@import "/src/variables.global.less";
+
+@media all and (min-width:1024px) {
+  body {
+    .card {
+      flex-flow: row nowrap;
+      padding-left: 40px;
+      padding-top: 20px;
+      padding-bottom: 20px;
+      padding-right: 40px;
+      align-items: flex-start;
+    }
+    .card:hover {
+      outline: 1px solid rgba(217, 217, 217, 1);
+    }
+    .textContent {
+      flex-direction: column;
+      display: flex;
+      padding-left: 40px;
+    }
+    .textContent {
+      order: 2;
+    }
+    .controls {
+      order: 4;
+      justify-content: flex-start;
+      align-content: space-around;
+      padding: 0;
+      margin-top: 36px;
+    }
+    .menu {
+      order: 3;
+      position: relative;
+      padding: 0;
+      margin-top: 30px;
+      text-align:right;
+    }
+  }
+}
+@media all and (min-width:1540px) {
+  body {
+    .card {
+      padding: 0 60px;
+    }
+  }
+}
+.menu {
+  position: absolute;
+  top: 15px;
+  right :15px;
+}
+.card {
+  background-color: @white;
+  border-radius: 7px;
+  display: flex;
+  flex-flow: row wrap;
+  position: relative;
+}
+.card > * {
+  flex: 1 1 100%;
+}
+.textContent, .controls {
+  padding-top: 22px;
+  padding-left: 20px;
+  padding-bottom: 20px;
+}
+.card button {
+  cursor: pointer;
+}
+.controls {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  padding: 22px 20px 10px 20px
+}
