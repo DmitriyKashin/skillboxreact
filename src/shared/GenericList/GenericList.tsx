@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Icon, EIcons } from '../Icons/Icon';
 import styles from './genericlist.less';
 
 
@@ -24,6 +25,7 @@ interface IGItem {
   className?: string;
   As?: 'a' | 'li' | 'button' | 'div';
   href?: string;
+  icon?: EIcons;
 }
 
 
@@ -42,13 +44,16 @@ export function MyList({ list }: IMyListProps) {
 export function GenericList({list}: IGenericListProps) {
   return (
   <>
-    {list.map(({As='div', text, onClick, className, id, href}) => (
+    {list.map(({As='div', text, onClick, className, id, href, icon}) => (
       <As
         className={className?className.split(' ').map((el)  => (styles[el])).join(' '):''}
         onClick={() => onClick(id)}
         key={id}
         href={href}
         >
+          {icon && (
+            <Icon name={icon} size={14} />
+          )}
           {text}
       </As>
     ))}

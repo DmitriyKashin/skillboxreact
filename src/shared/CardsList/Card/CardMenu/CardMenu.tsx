@@ -4,6 +4,7 @@ import { merge } from '../../../../utils/js/merge';
 import { generateId } from '../../../../utils/react/generateRandomIndex';
 import { Dropdown } from '../../../Dropdown';
 import { GenericList } from '../../../GenericList/GenericList';
+import { EIcons } from '../../../Icons/Icon';
 import { CardMenuButton } from '../CardMenuButton';
 import styles from './cardmenu.less';
 
@@ -14,11 +15,11 @@ interface IComponentWithClass{
 
 
 const GLIST = [
-{ text: 'Comments', As: 'li' as const, 'icon': 'message', className: 'list_underline_grey card_dropdown' },
-  { text: 'Share', As: 'li' as const, className: 'list_underline_grey card_dropdown' },
-  { text: 'Hide', As: 'li' as const, className: 'list_underline_grey card_dropdown' },
-  { text: 'Save', As: 'li'  as const, className: 'list_underline_grey card_dropdown'},
-  { text: 'Complain', As: 'li'  as const, className: 'card_dropdown'},
+{ text: 'Comments', As: 'li' as const, 'icon': EIcons.message, className: 'list_underline_grey card_dropdown' },
+  { text: 'Share', As: 'li' as const, 'icon': EIcons.share, className: 'list_underline_grey card_dropdown' },
+  { text: 'Hide', As: 'li' as const, 'icon': EIcons.hide, className: 'list_underline_grey card_dropdown' },
+  { text: 'Save', As: 'li'  as const, 'icon': EIcons.save, className: 'list_underline_grey card_dropdown'},
+  { text: 'Complain', As: 'li'  as const, 'icon': EIcons.complain, className: 'card_dropdown'},
 ].map(generateId);
 
 

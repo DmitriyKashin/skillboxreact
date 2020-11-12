@@ -23,7 +23,6 @@ export function Dropdown({button, children, isOpen, onClose = NOOP, onOpen = NOO
       setIsDropdownOpen(!isDropdownOpen);
     }
   }
-
   return (
     <div className={styles.container}>
       <div onClick={handleOpen}>
