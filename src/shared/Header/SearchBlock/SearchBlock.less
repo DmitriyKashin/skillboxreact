@@ -1,11 +1,12 @@
 .searchBlock {
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: column nowrap;
   justify-content: space-between;
   padding: 14px 20px;
   background: #FFFFFF;
   border-radius: 0px 0px 7px 7px;
   margin: 0 0 38px;
+  order: 1;
 }
 
 @media all and (min-width: 1024px) {
@@ -16,6 +17,7 @@
     border-radius: 0;
     box-shadow: none;
     order: 3;
+    flex-flow: row;
   }
 }
 
