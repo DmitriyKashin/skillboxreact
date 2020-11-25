@@ -3,9 +3,10 @@ import styles from './cardtextcontent.less';
 
 interface IComponentWithClass{
   className? : string,
+  text?: string,
 }
 
-export function CardTextContent( {className} : IComponentWithClass) {
+export function CardTextContent( {className, text} : IComponentWithClass) {
   return (
     <div className={className}>
       <div className={styles.metaData}>
@@ -23,8 +24,7 @@ export function CardTextContent( {className} : IComponentWithClass) {
       </div>
       <h2 className={styles.title}>
         <a href="#post-url" className={styles.postLink}>
-          Title of our article. Title of our article 2. Title of our article 4.
-          Title of our article. Title of our article 2. Title of our article 4.
+          {text}
         </a>
       </h2>
     </div>

@@ -42,9 +42,10 @@ export function MyList({ list }: IMyListProps) {
 
 
 export function GenericList({list}: IGenericListProps) {
+  const NOOP = () => {};
   return (
   <>
-    {list.map(({As='div', text, onClick, className, id, href, icon}) => (
+    {list.map(({As='div', text, onClick=NOOP, className, id, href, icon}) => (
       <As
         className={className?className.split(' ').map((el)  => (styles[el])).join(' '):''}
         onClick={() => onClick(id)}

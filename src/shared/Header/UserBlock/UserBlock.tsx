@@ -1,17 +1,13 @@
-import Axios from 'axios';
 import * as React from 'react';
 import { userContext } from '../../../context/userContext';
 import { Icon, EIcons } from '../../Icons/Icon';
 import styles from './UserBlock.less';
 
-interface IUserBlockProps {
-  avatarSrcProp?: string,
-  usernameProp?: string,
-}
 
-export function UserBlock({avatarSrcProp, usernameProp} : IUserBlockProps) {
+export function UserBlock() {
   const data = React.useContext(userContext);
   const [innerWidth, setInnerWidth] = React.useState(0);
+
   React.useEffect(() => {
     setInnerWidth(window.innerWidth);
   }, [innerWidth]);
