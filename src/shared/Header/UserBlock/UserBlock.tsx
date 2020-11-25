@@ -1,25 +1,33 @@
+import Axios from 'axios';
 import * as React from 'react';
+import { userContext } from '../../../context/userContext';
 import { Icon, EIcons } from '../../Icons/Icon';
 import styles from './UserBlock.less';
 
 interface IUserBlockProps {
-  avatarSrc?: string,
-  username?: string,
+  avatarSrcProp?: string,
+  usernameProp?: string,
 }
-export function UserBlock({avatarSrc, username} : IUserBlockProps) {
+
+export function UserBlock({avatarSrcProp, usernameProp} : IUserBlockProps) {
+  const data = React.useContext(userContext);
+  const [innerWidth, setInnerWidth] = React.useState(0);
+  React.useEffect(() => {
+    setInnerWidth(window.innerWidth);
+  }, [innerWidth]);
   return (
     <a 
     href={`https://www.reddit.com/api/v1/authorize?client_id=${process.env.CLIENT_ID}&response_type=code&state=RANDOM_STRING&redirect_uri=http://localhost:3000/auth&duration=permanent&scope=read identity submit`}
     className={styles.userBox}>
         <div className={styles.avatarBox}>
-          {  avatarSrc
-            ? <img src={avatarSrc} className={styles.avatarImage}></img>
-            : <Icon name={EIcons.profile} size={50}/>
+          {  data.iconImg
+            ? <img src={data.iconImg} className={styles.avatarImage}></img>
+            : <Icon name={EIcons.profile} size={innerWidth && innerWidth<1024?30:50}/>
           }
         </div>
         <div className={styles.username}>
           <span>
-            {username || 'Anonymous'}
+            {data.name || 'Anonymous'}
           </span>
         </div>
     </a>

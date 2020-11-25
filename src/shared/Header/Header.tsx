@@ -5,14 +5,17 @@ import { ThreadTitle } from './ThreadTitle/ThreadTitle';
 import { SortBlock } from './SortBlock/SortBlock';
 import { UserBlock } from './UserBlock/UserBlock';
 
+interface IHeaderProps {
+  token?: string;
+}
 
 export function Header() {
   return (
     <header className={styles.header}>
-      <SearchBlock />
+      <SearchBlock/>
       <ThreadTitle />
       <SortBlock />
-      <UserBlock />
+      <UserBlock/>
     </header>
   )
 }
