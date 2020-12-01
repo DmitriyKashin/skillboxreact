@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Post } from '../../../Post/Post';
 import styles from './cardtextcontent.less';
 
 interface IComponentWithClass{
@@ -7,6 +8,7 @@ interface IComponentWithClass{
 }
 
 export function CardTextContent( {className, text} : IComponentWithClass) {
+  const [isModalOpened, setIsModalOpened] = useState(false);
   return (
     <div className={className}>
       <div className={styles.metaData}>
@@ -23,9 +25,12 @@ export function CardTextContent( {className, text} : IComponentWithClass) {
         </span>
       </div>
       <h2 className={styles.title}>
-        <a href="#post-url" className={styles.postLink}>
+        <a href="#post-url" className={styles.postLink} onClick={() => {setIsModalOpened(true)}}>
           {text}
         </a>
+        {isModalOpened && (
+          <Post  onClose={() => setIsModalOpened(false)}/>
+        )}
       </h2>
     </div>
   );
