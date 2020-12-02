@@ -1,5 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import styles from './dropdown.less';
+import { DropdownPortal } from './DropdownPortal';
 
 
 interface IDropdownProps {
@@ -10,30 +11,50 @@ interface IDropdownProps {
   onClose?: () => void;
   className?: string;
 }
+interface iCoords {
+  x: number,
+  y: number,
+}
 const NOOP = () => {};
 
 export function Dropdown({button, children, isOpen, onClose = NOOP, onOpen = NOOP}: IDropdownProps) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(isOpen);
+  const [dropdownCoords, setDropdownCoords] = useState<iCoords>({x: 0, y: 0});
+  const ref = useRef<HTMLDivElement>(null);
+
   
   useEffect(() => isDropdownOpen ? onOpen(): onClose(), [isDropdownOpen]);
   useEffect(() => setIsDropdownOpen(isOpen),[isOpen]);
 
-  const handleOpen = () => {
+  const handleOpen = (event: React.MouseEvent<HTMLElement>) => {
+    event.preventDefault();
     if (isOpen === undefined) {
       setIsDropdownOpen(!isDropdownOpen);
     }
+    const boundings = event.currentTarget.getBoundingClientRect();
+    setDropdownCoords({
+      x: boundings.x,
+      y: event.pageY,
+    })
   }
+  useEffect(() => {
+    function handleClick(event: MouseEvent) {
+      if (event.target instanceof Node && !ref.current?.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    }
+    document.addEventListener('click', handleClick);
+    return () => {
+      document.removeEventListener('click', handleClick);
+    }
+  }, []);
   return (
-    <div className={styles.container}>
+    <div className={styles.container} ref={ref}>
       <div onClick={handleOpen} className={styles.button}>
         { button }
       </div>
       {isDropdownOpen &&  (
-        <div className={styles.listContainer}>
-            <div className={styles.list} onClick = {() => setIsDropdownOpen(false)}>
-              {children}
-            </div>
-        </div>
+        <DropdownPortal coords={dropdownCoords} children={children} onClick={() => setIsDropdownOpen(false)}/>
       )}
     </div>
   );
