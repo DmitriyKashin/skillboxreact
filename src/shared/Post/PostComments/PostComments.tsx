@@ -1,50 +1,53 @@
-import React, { MouseEvent, Ref, RefObject, useEffect, useRef, useState } from 'react';
+import React, { MouseEvent, Ref, RefObject, useContext, useEffect, useRef, useState } from 'react';
+import { commentContext, comment } from '../../../context/commentContext';
 import { CommentForm } from '../../CommentForm/CommentForm';
 import { EIcons, Icon } from '../../Icons/Icon';
 import styles from './postcomments.less';
 
-type comment = {
-  name: string;
-  time: string;
-  text: string;
-  category: string;
-  ref?: any;
-  // ref?: RefObject<HTMLTextAreaElement>;
-  visibleComment?: boolean;
-  comments?: Array<comment>
-}
+
 
 interface IPostComments {
- comments: Array<comment>,
+ comments?: Array<comment>,
+}
+
+function commentSearch(arr?: comment[], search?: number): any {
+  let result: comment | boolean = false;
+  if (!arr) return false;
+  let i:number;
+  result = false;
+  for(i=0;i<arr.length;i++) {
+    if (arr[i] && arr[i].comments) {
+        result = commentSearch(arr[i].comments, search);
+    }
+    if (arr[i].id == search) {
+      result = arr[i];
+      break;
+    }
+  }
+  return result;
 }
 
 export function PostComments({comments}: IPostComments) {
-  comments.map((comment,index) => {
-    comments[index].ref = useRef<HTMLTextAreaElement>(null);
-    comments[index].visibleComment = false;
-  })
-  const [stateComments, setComments] = useState(comments);
-  const [activeComment, setActiveComment] = useState<null | number>(null);
-
+  const {activeComment, onChangeActive, allComments, onChangeComments} = useContext(commentContext);
+  let commentsReady: comment[];
+  if (!allComments) return null;
+  if (comments && typeof comments !== 'undefined') {
+    commentsReady = comments;
+  } else {
+    commentsReady = allComments;
+  }
   useEffect(() => {
-    if (typeof activeComment === 'number' && typeof stateComments[activeComment] !== 'undefined' && typeof stateComments[activeComment] !== null) {
-      stateComments[activeComment].ref.current.value = '123';
-      stateComments[activeComment].ref.current.parentNode.style.display == "flex" ?  stateComments[activeComment].ref.current.parentNode.style.display = "none" :  stateComments[activeComment].ref.current.parentNode.style.display = "flex"; // через statе не работает
-      stateComments[activeComment].ref.current.focus();
+    if (activeComment >= 0) {
+      let our_element = commentSearch(allComments, activeComment);
+      // можно сделать через параметр visible у комментария, но получается сильно сложнее
+      our_element.ref.current.parentNode.style.display === 'none' ? our_element.ref.current.parentNode.style.display = "flex" : our_element.ref.current.parentNode.style.display = "none";
+      our_element.ref.current.placeholder = 'Dear Guest, enter your comment';
+      our_element.ref.current.focus();
     }
   }, [activeComment]);
-  const handleReplyClick = (index: number) => {
-    /* Это не работает. Срабатывает click outside в файле Post.tsx при любом вызове хука setComments  c новыми comments - попап закрывается. При этом если убрать этот сет, то ничего не закрывается и все работает кооректно (хотя клик и так и так есть)
-    let myComments = [...stateComments];
-    myComments[index].visibleComment = !myComments[index].visibleComment;
-    setComments(myComments);
-    */
-  }
   return (
     <div>
-      {stateComments.map(({name, time, text, comments, category, visibleComment = false, ref}, index) => {
-        // let textAreaRef = useRef<HTMLTextAreaElement>(null);
-        // Это тоже работает. Можно ли использовать рефы в циклах? 
+      {commentsReady.map(({name, time, text, comments, category, visibleComment = false, ref, id}, index) => {
         return (
           <div className={styles.commentContainer}key={Math.random()}>
             <div className={styles.leftCommentBlock}>
@@ -82,11 +85,13 @@ export function PostComments({comments}: IPostComments) {
               </div>
               <div className={styles.commentText}>
                 <p>{text}</p>
-                <span className={styles.commentAction} data-test={`${Math.random()}`} onClick={(e) => {
-                    let myComments = [...stateComments];
-                    myComments[index].visibleComment = !myComments[index].visibleComment;
-                    setComments(myComments);
-                    setActiveComment(index);
+                <span className={styles.commentAction} onClick={(e) => {
+                    // менять видимость в любом случае нужно, даже если активный коммент не изменился
+                    let our_element = commentSearch(allComments, id);
+                    our_element.ref.current.parentNode.style.display === 'none' ? our_element.ref.current.parentNode.style.display = "flex" : our_element.ref.current.parentNode.style.display = "none";
+                    our_element.ref.current.focus();
+                    onChangeActive(id);
+                    e.stopPropagation(); // Без этой строчки все уходит в верхний обработчик в Post.tsx, который уже не находит .target этого события внутри модального окна
                   }
                   }>
                   <Icon name={EIcons.message} size={14} />
@@ -101,7 +106,7 @@ export function PostComments({comments}: IPostComments) {
                   <span>Complain</span>
                 </span>
               </div>
-              <CommentForm myRef={ref} show={visibleComment}/>
+              <CommentForm myRef={ref} uncontrolled={true}/>
               {comments && 
                 <div className={styles.innerComment}>
                   <PostComments comments={comments}/>
