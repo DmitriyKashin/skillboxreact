@@ -1,4 +1,4 @@
-import React, { useState,useRef } from 'react';
+import React, { useState,useRef, useEffect } from 'react';
 import { hot } from 'react-hot-loader/root';
 import { Layout } from './shared/Layout/Layout';
 import './main.global.less';
@@ -7,19 +7,36 @@ import { Content } from './shared/Content/Content';
 import { CardsList } from './shared/CardsList';
 // import { Dropdown } from './shared/Dropdown';
 // import { GenericList } from './shared/GenericList/GenericList';
-import { useToken } from './hooks/useToken';
-import { tokenContext } from './context/tokenContext';
+// import { tokenContext } from './context/tokenContext';
+// import { useToken } from './hooks/useToken';
 import { UserContextProvider } from './context/userContext';
 import { PostsContextProvider } from './context/postsContext';
 import { commentContext, comment  } from './context/commentContext';
+import { Provider, useDispatch } from 'react-redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import { rootReducer, setToken } from './store';
+import { createStore } from 'redux';
 
 
+const store = createStore(rootReducer, composeWithDevTools());
 
+const AppWrapper = () => {
+  return (
+    <Provider store={store}>
+      <AppComponent />
+    </Provider>
+  )
+}
 function AppComponent() {
-  const [token] = useToken();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (window.__token__) {
+      dispatch(setToken(window.__token__));
+    }
+  }, []);
   const [commentValue, setCommentValue] = useState("");
   const [commentActive, setCommentActive] = useState(-1);
-  const CommentProvider = commentContext.Provider;
+  const  CommentProvider = commentContext.Provider;
   const [commentComments, setComments] = useState<comment[]|null>(
       [
       {
@@ -62,7 +79,6 @@ function AppComponent() {
     ]
   );
   return (
-    <tokenContext.Provider value={token}>
       <CommentProvider value={{
         value: commentValue,
         onChange: setCommentValue,
@@ -82,7 +98,6 @@ function AppComponent() {
           </Layout>
         </UserContextProvider>
       </CommentProvider>
-      </tokenContext.Provider>
   );
 }
-export const App = hot( () => <AppComponent/>);
+export const App = hot( () => <AppWrapper/>);

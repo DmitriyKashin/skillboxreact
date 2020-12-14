@@ -1,7 +1,9 @@
 
 import Axios from 'axios';
-import React, { useContext } from 'react';
-import { tokenContext } from '../context/tokenContext';
+import React  from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store';
+// import { tokenContext } from '../context/tokenContext';
 interface IUserData {
   name?: string,
   iconImg?: string,
@@ -12,7 +14,10 @@ export function useUserData() {
     name: '',
     iconImg: '',
   });
-  const token = useContext(tokenContext);
+  // const token = useContext(tokenContext);
+  
+  const token = useSelector<RootState, string>(state => state.token);
+
   
   React.useEffect(() => {
     if (token && token != 'undefined' && token!='false') {

@@ -1,6 +1,7 @@
 import React, { MouseEvent, Ref, RefObject, useContext, useEffect, useRef, useState } from 'react';
 import { commentContext, comment } from '../../../context/commentContext';
 import { CommentForm } from '../../CommentForm/CommentForm';
+import { CommentFormContainer } from '../../CommentFormContainer/CommentFormContainer';
 import { EIcons, Icon } from '../../Icons/Icon';
 import styles from './postcomments.less';
 
@@ -106,7 +107,7 @@ export function PostComments({comments}: IPostComments) {
                   <span>Complain</span>
                 </span>
               </div>
-              <CommentForm myRef={ref} uncontrolled={true}/>
+              <CommentFormContainer myRef={ref} uncontrolled={true}/>
               {comments && 
                 <div className={styles.innerComment}>
                   <PostComments comments={comments}/>

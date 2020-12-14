@@ -1,7 +1,9 @@
 
 import Axios from 'axios';
 import React, { useContext } from 'react';
-import { tokenContext } from '../context/tokenContext';
+import { useSelector } from 'react-redux';
+// import { tokenContext } from '../context/tokenContext';
+import { RootState } from '../store';
 
 interface IPostItem {
   id: string;
@@ -12,7 +14,7 @@ export function usePostsData() {
   
   const [posts, setPosts] = React.useState<IPostItem[]>([]);
 
-  const token = useContext(tokenContext);
+  const token = useSelector<RootState, string>(state => state.token);
   
   React.useEffect(() => {
     if (token && token != 'undefined' && token!='false') {

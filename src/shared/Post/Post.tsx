@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import { CommentForm } from '../CommentForm/CommentForm';
+import { CommentFormContainer } from '../CommentFormContainer/CommentFormContainer';
 import styles from './post.less';
 import { PostComments } from './PostComments/PostComments';
 
@@ -44,7 +45,7 @@ export function Post(props: IPost) {
         Module not found can't resolve style.css in src folder, I tried to find some help on stackoverflow and similar but nothing helpful.
         </p>
       </div>
-      <CommentForm mainComment={true} uncontrolled={false}/>
+      <CommentFormContainer mainComment={true} uncontrolled={false}/>
       <PostComments/>
     </div>
   ), node);

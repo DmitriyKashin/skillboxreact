@@ -38,7 +38,9 @@ export function Dropdown({button, children, isOpen, onClose = NOOP, onOpen = NOO
     })
   }
   useEffect(() => {
+    console.log('useffect dropdown');
     function handleClick(event: MouseEvent) {
+      console.log('here I am');
       if (event.target instanceof Node && !ref.current?.contains(event.target)) {
         setIsDropdownOpen(false);
       }
