@@ -20,7 +20,7 @@ export function usePostsData() {
   
   React.useEffect(() => {
     if (token && token != 'undefined' && token!='false') {
-      Axios.get('https://oauth.reddit.com/best/123', {
+      Axios.get('https://oauth.reddit.com/best', {
         headers: {
           Authorization: `bearer ${token}`
         },
