@@ -5,6 +5,7 @@ import './main.global.less';
 import { Header } from './shared/Header/Header';
 import { Content } from './shared/Content/Content';
 import { CardsList } from './shared/CardsList';
+
 // import { Dropdown } from './shared/Dropdown';
 // import { GenericList } from './shared/GenericList/GenericList';
 // import { tokenContext } from './context/tokenContext';
@@ -40,11 +41,15 @@ const  timeout = (ms:number): ThunkAction<void, RootState, unknown, Action<strin
 */
 
 
+const saveToken = (): ThunkAction<void, RootState, unknown, Action<string>>  => (dispatch, getState) => {
+  if (window.__token__) {
+    dispatch(setToken(window.__token__));
+  }
+}
+
 const store = createStore(rootReducer, composeWithDevTools(
   applyMiddleware(thunk)
 ));
-
-
 
 
 const AppWrapper = () => {
@@ -57,10 +62,7 @@ const AppWrapper = () => {
 function AppComponent() {
   const dispatch = useDispatch();
   useEffect(() => {
-    if (window.__token__) {
-      dispatch(setToken(window.__token__));
-    }
-
+    dispatch(saveToken());
   }, []);
   const [commentValue, setCommentValue] = useState("");
   const [commentActive, setCommentActive] = useState(-1);
