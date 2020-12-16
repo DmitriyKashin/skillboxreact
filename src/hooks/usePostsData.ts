@@ -2,8 +2,10 @@
 import Axios from 'axios';
 import React, { useContext } from 'react';
 import { useSelector } from 'react-redux';
+import { RootState } from '../store/reducer';
+
 // import { tokenContext } from '../context/tokenContext';
-import { RootState } from '../store';
+
 
 interface IPostItem {
   id: string;
@@ -18,7 +20,7 @@ export function usePostsData() {
   
   React.useEffect(() => {
     if (token && token != 'undefined' && token!='false') {
-      Axios.get('https://oauth.reddit.com/best', {
+      Axios.get('https://oauth.reddit.com/best/123', {
         headers: {
           Authorization: `bearer ${token}`
         },

@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FormEvent,Ref,useContext, useRef, useState } from "react";
 import { useDispatch, useSelector, useStore } from "react-redux";
-import { RootState, updateComment } from "../../store";
+import { RootState, updateComment } from "../../store/reducer";
 import { CommentForm } from "../CommentForm/CommentForm";
 // import { commentContext } from "../../context/commentContext";
 import styles from './commentform.less';

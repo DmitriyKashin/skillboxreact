@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { userContext } from '../../../context/userContext';
+import { useUserData } from '../../../hooks/useUserData';
 import { Icon, EIcons } from '../../Icons/Icon';
 import styles from './UserBlock.less';
 
 
 export function UserBlock() {
-  const data = React.useContext(userContext);
+  const {data, loading} = useUserData();
   const [innerWidth, setInnerWidth] = React.useState(0);
 
   React.useEffect(() => {
@@ -23,7 +24,11 @@ export function UserBlock() {
         </div>
         <div className={styles.username}>
           <span>
-            {data.name || 'Anonymous'}
+            {
+              loading
+              ? <span>Loading</span>
+              : data.name || 'Anonymous'
+            }
           </span>
         </div>
     </a>

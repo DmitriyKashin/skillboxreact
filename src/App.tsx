@@ -9,16 +9,43 @@ import { CardsList } from './shared/CardsList';
 // import { GenericList } from './shared/GenericList/GenericList';
 // import { tokenContext } from './context/tokenContext';
 // import { useToken } from './hooks/useToken';
-import { UserContextProvider } from './context/userContext';
+
 import { PostsContextProvider } from './context/postsContext';
 import { commentContext, comment  } from './context/commentContext';
 import { Provider, useDispatch } from 'react-redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { rootReducer, setToken } from './store';
-import { createStore } from 'redux';
+import { rootReducer, RootState, setToken } from './store/reducer';
+import { Action, applyMiddleware, createStore } from 'redux';
+import thunk, { ThunkAction } from 'redux-thunk';
 
 
-const store = createStore(rootReducer, composeWithDevTools());
+/*
+const ping: Middleware = (store) => (next) => (action) => {
+  console.log('ping:');
+  next(action);
+}
+
+const pong: Middleware = (store) => (next) => (action) => {
+  console.log('pong:');
+  next(action);
+}
+
+const  timeout = (ms:number): ThunkAction<void, RootState, unknown, Action<string>>  => (dispatch, getState) => {
+  dispatch({type: 'START'});
+  setTimeout(() => {
+    dispatch({type: 'FINISh'});
+  }, ms)
+}
+
+*/
+
+
+const store = createStore(rootReducer, composeWithDevTools(
+  applyMiddleware(thunk)
+));
+
+
+
 
 const AppWrapper = () => {
   return (
@@ -33,6 +60,7 @@ function AppComponent() {
     if (window.__token__) {
       dispatch(setToken(window.__token__));
     }
+
   }, []);
   const [commentValue, setCommentValue] = useState("");
   const [commentActive, setCommentActive] = useState(-1);
@@ -87,7 +115,6 @@ function AppComponent() {
         allComments: commentComments,
         onChangeComments: setComments,
         }}>
-        <UserContextProvider>
           <Layout>
             <Header/>
             <Content>
@@ -96,7 +123,6 @@ function AppComponent() {
               </PostsContextProvider>
             </Content>
           </Layout>
-        </UserContextProvider>
       </CommentProvider>
   );
 }
