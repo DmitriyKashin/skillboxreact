@@ -31,7 +31,10 @@ export function CardsList() {
         }
       })
       setRisingPosts(prevChildren =>  prevChildren.concat(...children));
-      setLoadedCount(loadedCount =>  loadedCount+1);
+      setLoadedCount((loadedCount) =>  {
+        if (loadedCount == 2) return 1;
+        return loadedCount + 1;
+      });
       setNextAfter(after);
     } 
     catch (error) {
