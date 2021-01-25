@@ -17,9 +17,8 @@ export function CommentFormContainer({myRef, uncontrolled=true, mainComment=fals
 
   // const { onChange } = useContext(commentContext);
 
-  function handleSubmit(event: FormEvent) {
-    event.preventDefault();
-    console.log(value);
+  function handleSubmit(data: any) {
+   console.log(data);
   }
   function handleChange(event: ChangeEvent<HTMLTextAreaElement>) {
     // onChange(event.target.value);
