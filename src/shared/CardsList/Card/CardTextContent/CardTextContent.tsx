@@ -5,9 +5,10 @@ import styles from './cardtextcontent.less';
 interface IComponentWithClass{
   className? : string,
   text?: string,
+  title?: string,
 }
 
-export function CardTextContent( {className, text} : IComponentWithClass) {
+export function CardTextContent( {className, text, title} : IComponentWithClass) {
   const [isModalOpened, setIsModalOpened] = useState(false);
   return (
     <div className={className}>
@@ -26,7 +27,7 @@ export function CardTextContent( {className, text} : IComponentWithClass) {
       </div>
       <h2 className={styles.title}>
         <a href="#post-url" className={styles.postLink} onClick={() => {setIsModalOpened(true)}}>
-          {text}
+          {text?text:title?title:''}
         </a>
         {isModalOpened && (
           <Post  onClose={() => setIsModalOpened(false)}/>

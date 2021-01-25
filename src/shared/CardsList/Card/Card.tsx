@@ -6,10 +6,10 @@ import { CardMenu } from './CardMenu';
 import { CardPreview } from './CardPreview';
 import { CardTextContent } from './CardTextContent';
 
-export function Card({text} : {text: string}) {
+export function Card({text, title} : {text: string, title?:string}) {
   return (
     <li className={styles.card}>
-      <CardTextContent className={styles.textContent} text={text} />
+      <CardTextContent className={styles.textContent} text={text} title={title} />
       <CardPreview className={styles.preview} />
       <CardMenu className={styles.menu} />
       <CardControls className={styles.controls} />
