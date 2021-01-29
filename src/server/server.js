@@ -11,11 +11,7 @@ const app = express();
 
 app.use('/static', express.static('./dist/client'));
 
-app.get('/', (req, res) => {
-  res.send(
-    indexTemplate(ReactDOMServer.renderToString(App())),
-  );
-});
+
 
 app.get('/auth', (req, res) => {
   // req.query.code;
@@ -34,6 +30,15 @@ app.get('/auth', (req, res) => {
   })
   .catch(console.log);
   
+});
+
+
+// all routes except the above
+
+app.get('*', (req, res) => {
+  res.send(
+    indexTemplate(ReactDOMServer.renderToString(App())),
+  );
 });
 
 

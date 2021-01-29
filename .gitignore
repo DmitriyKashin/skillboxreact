@@ -1,5 +1,6 @@
 .idea
+dist/client/*
 dist/client
-dist/server
+dist/server/*
 dist
 node_modules

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
+import { useHistory } from 'react-router-dom';
 import { CommentForm } from '../CommentForm/CommentForm';
 import { CommentFormContainer } from '../CommentFormContainer/CommentFormContainer';
 import styles from './post.less';
@@ -10,12 +11,14 @@ interface IPost {
 }
 export function Post(props: IPost) {
   const ref = useRef<HTMLDivElement>(null);
+  const history = useHistory();
   useEffect(() => {
     function handleClick(event: MouseEvent) {
       if (event.target instanceof Node && !ref.current?.contains(event.target)) {
         console.log(event.target,'Clicke outside the modal window!'); // Каждый клик после ререндера внутренних компонентов будет поподать сюда
         console.log(ref.current, ref.current?.contains(event.target))
         props.onClose?.();
+        history.push('/');
       }
     }
     document.addEventListener('click', handleClick);

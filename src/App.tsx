@@ -18,7 +18,8 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { rootReducer, RootState, setToken } from './store/reducer';
 import { Action, applyMiddleware, createStore } from 'redux';
 import thunk, { ThunkAction } from 'redux-thunk';
-
+import { BrowserRouter, Link, Switch, Router, Route } from 'react-router-dom';
+import { Post } from './shared/Post/Post';
 
 /*
 const ping: Middleware = (store) => (next) => (action) => {
@@ -55,14 +56,16 @@ const store = createStore(rootReducer, composeWithDevTools(
 const AppWrapper = () => {
   return (
     <Provider store={store}>
-      <AppComponent />
+        <AppComponent />
     </Provider>
   )
 }
 function AppComponent() {
   const dispatch = useDispatch();
+  const [mounted, setMounted] = useState(false);
   useEffect(() => {
     dispatch(saveToken());
+    setMounted(true);
   }, []);
   const [commentValue, setCommentValue] = useState("");
   const [commentActive, setCommentActive] = useState(-1);
@@ -109,6 +112,7 @@ function AppComponent() {
     ]
   );
   return (
+
       <CommentProvider value={{
         value: commentValue,
         onChange: setCommentValue,
@@ -117,14 +121,21 @@ function AppComponent() {
         allComments: commentComments,
         onChangeComments: setComments,
         }}>
-          <Layout>
-            <Header/>
-            <Content>
-              <PostsContextProvider>
-                <CardsList/>
-              </PostsContextProvider>
-            </Content>
-          </Layout>
+          {mounted && (
+            <BrowserRouter>
+             <Layout>
+             <Header/>
+             <Content>
+               <PostsContextProvider>
+                 <CardsList/>
+                 <Route path="/posts/:id">
+                   <Post />
+                 </Route>
+               </PostsContextProvider>
+             </Content>
+           </Layout>
+           </BrowserRouter>
+          )}
       </CommentProvider>
   );
 }
