@@ -7,12 +7,12 @@
     "node": "14.x"
   },
   "scripts": {
-    "build:dev": "cross-env env NODE_ENV=development  CLIENT_ID=vneS-7rxQSk-hA webpack --config webpack.config.js",
-    "build:prod": "cross-env env NODE_ENV=production  CLIENT_ID=vneS-7rxQSk-hA webpack --config webpack.config.js",
-    "dev": "cross-env env NODE_ENV=development CLIENT_ID=vneS-7rxQSk-hA node ./bin/dev.js",
+    "build:dev": "cross-env env NODE_ENV=development  DOMAIN=http://localhost:3000 SECRET=NUYRbIcVy7K9tG7nYcog6f7UqACPiA CLIENT_ID=vneS-7rxQSk-hA webpack --config webpack.config.js",
+    "build:prod": "cross-env env NODE_ENV=production  DOMAIN=http://localhost:3000 SECRET=NUYRbIcVy7K9tG7nYcog6f7UqACPiA CLIENT_ID=vneS-7rxQSk-hA webpack --config webpack.config.js",
+    "dev": "cross-env env NODE_ENV=development DOMAIN=http://localhost:3000 SECRET=NUYRbIcVy7K9tG7nYcog6f7UqACPiA CLIENT_ID=vneS-7rxQSk-hA node ./bin/dev.js",
     "test": "test",
-    "start": "node ./dist/server/server.js",
-    "build": "cross-env env NODE_ENV=production  CLIENT_ID=vneS-7rxQSk-hA webpack --config webpack.config.js"
+    "start": "env DOMAIN=https://react-skillbox-test.herokuapp.com CLIENT_ID=Q4IGwQPn-8OCLg SECRET=JofR1bQsGhbnGvlotgC-wrTEjv-Xmg  node ./dist/server/server.js",
+    "build": "cross-env env DOMAIN=https://react-skillbox-test.herokuapp.com NODE_ENV=production  CLIENT_ID=vneS-7rxQSk-hA SECRET=NUYRbIcVy7K9tG7nYcog6f7UqACPiA webpack --config webpack.config.js"
   },
   "keywords": [
     "React",
