@@ -5,14 +5,16 @@ import { App } from '../App';
 import { Header } from '../shared/Header';
 import { indexTemplate } from './indexTemplate';
 import axios from 'axios';
+import compression from 'compression';
 
 const  PORT = process.env.PORT || 3000;
 
 const app = express();
 
+app.use(compression());
+
 
 app.use('/static', express.static('./dist/client'));
-
 
 
 app.get('/auth', (req, res) => {
