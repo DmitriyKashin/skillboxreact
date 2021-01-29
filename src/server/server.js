@@ -6,6 +6,8 @@ import { Header } from '../shared/Header';
 import { indexTemplate } from './indexTemplate';
 import axios from 'axios';
 
+const  PORT = process.env.PORT || 3000;
+
 const app = express();
 
 
@@ -42,6 +44,6 @@ app.get('*', (req, res) => {
 });
 
 
-app.listen(3000, () => {
-  console.log('Server just have started on http://localhost:3000 ');
+app.listen(PORT, () => {
+  console.log(`Server just have started on http://localhost:${PORT}`);
 });
