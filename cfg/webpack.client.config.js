@@ -12,7 +12,10 @@ const DEV_PLUGINS = [
   new CleanWebpackPlugin(),
 ];
 const COMMON_PLUGINS = [
-  new DefinePlugin({'process.env.CLIENT_ID' : `'${process.env.CLIENT_ID}'`})
+  new DefinePlugin({
+    'process.env.CLIENT_ID' : `'${process.env.CLIENT_ID}'`,
+    'process.env.DOMAIN' : `'${process.env.DOMAIN}'`,
+  })
 ]
 function setupDevtool() {
   if (IS_DEV) return 'eval';
